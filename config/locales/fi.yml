@@ -1,0 +1,47 @@
+fi:
+  users:
+    password_reset:
+      new:
+        type_your_email_to_get_the_code: Syötä sähköpostisi saadaksesi salasananvaihtokoodin ja ohjeet sähköpostiisi.
+      type_token:
+        paste_token_or_click_the_link_from_email: Liitä saamasi koodi tähän tai klikkaa linkkiä sähköpostista.
+
+    password_resets:
+      new_password:
+        new_password: Uusi salasana
+        new_password_confirmation: Uusi salasana uudestaan
+        save: Tallenna
+      new:
+        email: Sähköposti joka on käyttäjäsi tiedoissa
+        send_code: Lähetä koodi
+      type_token:
+        token: Koodi
+        send: Lähetä
+
+      generate_token:
+        notice: Salasanan vaihtokoodi on lähetetty sähköpostiisi, mikäli syöttämälläsi sähköpostilla löytyi käyttäjä.
+      typed_token:
+        success: Koodi oikein. Voit nyt vaihtaa salasanasi.
+        error: Koodi väärin
+      typed_new_password_for_password_reset:
+        success: Salasana vaihdettu onnistuneesti. Voit nyt kirjautua sisään.
+        passwords_not_identical: Salasanat eivät vastaa toisiaan
+        wrong_code: Väärä koodi
+      cancel:
+        success: Salasanan vaihtoprosessi peruttu onnistuneesti
+        error: Salasanan vaihtoprosessin peruminen ei onnistunut. Ota yhteyttä välittömästi sivuston ylläpitäjään.
+
+  user:
+    password_reset:
+      info_sms_about_asked_reset: Pyysit salasananvaihtoa sivulla gvodata.com. Ohjeet ovat lahetetty mailiisi.
+
+  user_password_reset_mailer:
+    password_reset_email:
+      asked_for_password_change: Pyysit äskettäin salasanan vaihtoa käyttäjälle %{user} sivustolla %{domain}.
+      code_for_password_change: "Voit vaihtaa salasanan tästä linkistä: %{change_link}. Tai voit kopioida koodin käsin tästä: %{reset_token}"
+      if_it_wasnt_you: "Mikäli et ole pyytänyt salasanan vaihtoa, klikkaa välittömästi tästä:"
+      
+  mailers:
+    user_password_reset_mailer:
+      password_reset_email:
+        subject: Salasanan vaihto

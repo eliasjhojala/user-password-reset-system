@@ -1,0 +1,4 @@
+<%= form_tag({ action: :generate_token }, { class: "general" }) do %>
+  <%= text_field_tag :email, nil, placeholder: t(".email") %>
+  <%= submit_tag t(".send_code") %>
+<% end %>
