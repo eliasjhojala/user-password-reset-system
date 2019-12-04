@@ -1,4 +1,6 @@
 class Users::PasswordResetsController < ApplicationController
+
+  skip_before_action :require_login rescue nil
   
   def new
     skip_authorization
