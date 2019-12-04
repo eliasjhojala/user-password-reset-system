@@ -33,7 +33,7 @@ fi:
 
   user:
     password_reset:
-      info_sms_about_asked_reset: Pyysit salasananvaihtoa sivulla gvodata.com. Ohjeet ovat lahetetty mailiisi.
+      info_sms_about_asked_reset: Pyysit salasananvaihtoa sivulla %{domain}. Ohjeet ovat lahetetty mailiisi.
 
   user_password_reset_mailer:
     password_reset_email:
