@@ -12,7 +12,7 @@ fi:
         new_password_confirmation: Uusi salasana uudestaan
         save: Tallenna
       new:
-        email: Sähköposti joka on käyttäjäsi tiedoissa
+        email: Sähköposti
         send_code: Lähetä koodi
       type_token:
         token: Koodi
@@ -24,7 +24,7 @@ fi:
         success: Koodi oikein. Voit nyt vaihtaa salasanasi.
         error: Koodi väärin
       typed_new_password_for_password_reset:
-        success: Salasana vaihdettu onnistuneesti. Voit nyt kirjautua sisään.
+        success: Salasana vaihdettu onnistuneesti.
         passwords_not_identical: Salasanat eivät vastaa toisiaan
         wrong_code: Väärä koodi
       cancel:

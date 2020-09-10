@@ -4,6 +4,7 @@ class User::PasswordReset < ApplicationRecord
   belongs_to :user, optional: true
   
   def self.new_for_email(email)
+    return false unless email.present?
     users = User.respond_to?(:custom_where_by) ? User.custom_where_by(email: email) : User.where(email: email)
     if users.exists?
       user = users.order(id: :asc).first

@@ -10,6 +10,7 @@ class Users::PasswordResetsController < ApplicationController
     skip_authorization
     User::PasswordReset.new_for_email(params[:email])
     flash_notice
+    flash.discard(:notice)
     render :type_token
   end
   
@@ -20,17 +21,21 @@ class Users::PasswordResetsController < ApplicationController
     elsif params[:id].present?
       { id: params[:id] }
     end
-    users = User.respond_to?(:custom_where_by) ? User.custom_where_by(**query) : User.where(**query)
-    user = users.order(id: :asc).first
-    user_id = user.id
-    if User::PasswordReset.token_allowed(token: params[:token], user_id: user_id)
-      flash_success
-      @username = user.username
-      render :new_password
-    else
-      flash_error
-      render :type_token
+    if query
+      users = User.respond_to?(:custom_where_by) ? User.custom_where_by(**query) : User.where(**query)
+      user = users.order(id: :asc).first
+      if user.present?
+        user_id = user.id
+        if User::PasswordReset.token_allowed(token: params[:token], user_id: user_id)
+          flash_success
+          @user = user
+          render :new_password
+          return
+        end
+      end
     end
+    flash_error
+    render :type_token
   end
   
   def typed_new_password_for_password_reset
@@ -44,15 +49,19 @@ class Users::PasswordResetsController < ApplicationController
     if User::PasswordReset.token_allowed(token: params[:token], user_id: user_id)
       user = User.find user_id
       if user.update(user_password_params)
-        flash_success
         User::PasswordReset.delete_token_for_user(user_id)
-        redirect_to root_path
+        unless UserPasswordResetSystem.settings[:run_after_password_reset_success]
+          flash_success
+          redirect_to root_path
+        else
+          after_password_reset_success user
+        end
       else
-        error('.passwords_not_identical')
+        @user = user
         render :new_password
       end
     else
-      error('.wrong_code')
+      flash_error '.wrong_code'
       redirect_to type_token_for_password_reset_path
     end
   end
