@@ -2,9 +2,7 @@ module UserPasswordResetSystem
   class Engine < Rails::Engine
   end
   
-  class << self
-    mattr_accessor :settings
-  end
+  mattr_accessor :settings
   
   def self.setup(&block)
     yield self
