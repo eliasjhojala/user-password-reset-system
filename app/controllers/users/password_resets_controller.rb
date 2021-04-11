@@ -13,6 +13,10 @@ class Users::PasswordResetsController < ApplicationController
     flash.discard(:notice)
     render :type_token
   end
+
+  def type_token
+    skip_authorization
+  end
   
   def typed_token
     skip_authorization
