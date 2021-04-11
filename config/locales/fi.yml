@@ -39,7 +39,6 @@ fi:
     password_reset_email:
       asked_for_password_change: Pyysit äskettäin salasanan vaihtoa käyttäjälle %{user} sivustolla %{domain}.
       code_for_password_change: "Voit vaihtaa salasanan tästä linkistä: %{change_link}. Tai voit kopioida koodin käsin tästä: %{reset_token}"
-      if_it_wasnt_you: "Mikäli et ole pyytänyt salasanan vaihtoa, klikkaa välittömästi tästä:"
       
   mailers:
     user_password_reset_mailer:

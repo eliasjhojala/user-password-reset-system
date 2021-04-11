@@ -74,14 +74,4 @@ class Users::PasswordResetsController < ApplicationController
     params.require(:user).permit(:password, :password_confirmation)
   end
   
-  def cancel
-    skip_authorization
-    if User::PasswordReset.cancel_if_allowed(token: params[:reset_token], user_id: params[:user_id])
-      flash_success
-    else
-      flash_error
-    end
-    redirect_to root_path
-  end
-  
 end

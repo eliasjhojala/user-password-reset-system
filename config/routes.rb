@@ -7,7 +7,6 @@ Rails.application.routes.draw do
       get 'luo_uusi/:id/:token' => 'password_resets#typed_token', as: 'email_link_for_typed_token_for_password_reset'
       post 'luo_uusi' => 'password_resets#typed_token', as: 'typed_token_for_password_reset'
       post 'uusi_luotu' => 'password_resets#typed_new_password_for_password_reset', as: 'typed_new_password_for_password_reset'
-      get 'peru/:user_id/:reset_token' => 'password_resets#cancel', as: 'cancel_password_reset'
       get '/:custom_path' => 'password_resets#new'
     end
   end
