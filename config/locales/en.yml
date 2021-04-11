@@ -1,0 +1,43 @@
+en:
+  users:
+    password_reset:
+      new:
+        type_your_email_to_get_the_code: Input your email address to get the reset your password
+      type_token:
+        paste_token_or_click_the_link_from_email: Click the link sent to your email or paste the token here
+
+    password_resets:
+      new_password:
+        new_password: New password
+        new_password_confirmation: New password confirmation
+        save: Save
+      new:
+        email: Email address
+        send_code: Send the token
+      type_token:
+        token: Token
+        send: Send
+
+      generate_token:
+        notice: The password reset token has been sent if an account was found with the address provided
+      typed_token:
+        success: You may now change your password
+        error: Incorrect token
+      typed_new_password_for_password_reset:
+        success: Password changed successfully
+        passwords_not_identical: The passwords do not match
+        wrong_code: Incorrect token
+
+  user:
+    password_reset:
+      info_sms_about_asked_reset: You requested for a password change on %{domain}. The instructions have been sent to your email.
+
+  user_password_reset_mailer:
+    password_reset_email:
+      asked_for_password_change: You requested a password change for %{user} on %{domain}.
+      code_for_password_change: "You can change your password by clicking this link: %{change_link}. Alternatively, copy this token: %{reset_token}"
+      
+  mailers:
+    user_password_reset_mailer:
+      password_reset_email:
+        subject: Password reset

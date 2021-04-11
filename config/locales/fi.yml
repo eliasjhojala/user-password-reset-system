@@ -27,9 +27,6 @@ fi:
         success: Salasana vaihdettu onnistuneesti.
         passwords_not_identical: Salasanat eivät vastaa toisiaan
         wrong_code: Väärä koodi
-      cancel:
-        success: Salasanan vaihtoprosessi peruttu onnistuneesti
-        error: Salasanan vaihtoprosessin peruminen ei onnistunut. Ota yhteyttä välittömästi sivuston ylläpitäjään.
 
   user:
     password_reset:
