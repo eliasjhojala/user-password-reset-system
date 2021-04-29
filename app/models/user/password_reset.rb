@@ -20,7 +20,6 @@ class User::PasswordReset < ApplicationRecord
       
       UserPasswordResetMailer.password_reset_email(user: user, email: user.email, reset_token: token,
         change_link: Rails.application.routes.url_helpers.email_link_for_typed_token_for_password_reset_url(user, token),
-        cancel_link: Rails.application.routes.url_helpers.cancel_password_reset_url(user.id, token),
         domain: domain
       ).deliver_now
       
@@ -51,18 +50,7 @@ class User::PasswordReset < ApplicationRecord
       return false
     end
   end
-  
-  def self.cancel_if_allowed(**options)
-    if self.where(user_id: options[:user_id]).exists?
-      correct_digest = self.where(user_id: options[:user_id]).last.reset_digest
-      if BCrypt::Password.new(correct_digest) == options[:token]
-        self.where(user_id: options[:user_id]).delete_all
-        return true
-      end
-    end
-    return false
-  end
-  
+
   def self.delete_token_for_user(user_id)
     self.where(user_id: user_id).delete_all if self.where(user_id: user_id).exists?
   end
