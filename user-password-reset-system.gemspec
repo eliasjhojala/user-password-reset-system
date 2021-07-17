@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = %q{user-password-reset-system}
-  s.version = "0.1.09"
-  s.date = %q{2021-04-11}
+  s.version = "0.1.10"
+  s.date = %q{2021-07-17}
   s.summary = %q{system for resetting user password}
   s.files = [
     "lib/user-password-reset-system.rb"
