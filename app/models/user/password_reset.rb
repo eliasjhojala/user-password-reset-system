@@ -18,10 +18,10 @@ class User::PasswordReset < ApplicationRecord
       
       domain = Rails.application.config.action_controller.default_url_options[:host]
       
-      UserPasswordResetMailer.password_reset_email(user: user, email: user.email, reset_token: token,
+      UserPasswordResetMailer.with(user: user, email: user.email, reset_token: token,
         change_link: Rails.application.routes.url_helpers.email_link_for_typed_token_for_password_reset_url(user, token),
         domain: domain
-      ).deliver_now
+      ).password_reset_email.deliver_now
       
       if (Module.const_get('Sms').is_a?(Class) rescue false)
         Sms.send(to: user.phone, message: I18n.t("user.password_reset.info_sms_about_asked_reset", domain: domain)) if user.phone.present?

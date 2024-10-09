@@ -1,11 +1,11 @@
 class UserPasswordResetMailer < ApplicationMailer
   
   def password_reset_email(**options)
-    @user = options[:user]
-    @email = options[:email]
-    @reset_token = options[:reset_token]
-    @change_link = options[:change_link]
-    @domain = options[:domain]
+    @user = params[:user]
+    @email = params[:email]
+    @reset_token = params[:reset_token]
+    @change_link = params[:change_link]
+    @domain = params[:domain]
     mail(to: @email, subject: I18n.t("mailers.user_password_reset_mailer.password_reset_email.subject"))
   end
   
