@@ -23,8 +23,8 @@ class User::PasswordReset < ApplicationRecord
         domain: domain
       ).password_reset_email.deliver_now
       
-      if (Module.const_get('Sms').is_a?(Class) rescue false)
-        Sms.send(to: user.phone, message: I18n.t("user.password_reset.info_sms_about_asked_reset", domain: domain)) if user.phone.present?
+      if (send_sms = UserPasswordResetSystem.settings[:send_sms]) && user.phone.present?
+        send_sms[to: user.phone, message: I18n.t("user.password_reset.info_sms_about_asked_reset", domain: domain)]
       end
       
       return true
