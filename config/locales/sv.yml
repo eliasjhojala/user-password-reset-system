@@ -1,0 +1,46 @@
+sv:
+  users:
+    password_reset:
+      new:
+        type_your_email_to_get_the_code: Ange ditt användarnamn, din e-postadress eller ditt telefonnummer för att få instruktioner om lösenordsåterställning.
+      type_token:
+        paste_token_or_click_the_link_from_email: Klicka på länken du fick eller klistra in koden här.
+
+    password_resets:
+      new_password:
+        password_min_length_hint: "Lösenordet måste vara minst %{count} tecken."
+        new_password: Nytt lösenord
+        new_password_confirmation: Bekräfta nytt lösenord
+        save: Spara
+        submit_token_expired: Länken för lösenordsåterställning har gått ut. Begär en ny.
+        request_new_link: Begär en ny länk
+      new:
+        contact: Användarnamn, e-post eller telefonnummer
+        send_code: Skicka instruktioner
+      type_token:
+        token: Kod
+        send: Skicka
+
+      generate_token:
+        notice: Om ett konto matchade det du angav har instruktioner skickats.
+      typed_token:
+        success: Du kan nu ändra ditt lösenord
+        error: Felaktig kod
+      typed_new_password_for_password_reset:
+        success: Lösenordet har ändrats
+        passwords_not_identical: Lösenorden matchar inte
+        wrong_code: Felaktig kod
+
+  user:
+    password_reset:
+      sms_reset_instructions: "Lösenordsåterställning för %{domain}. Öppna: %{change_link} Kod: %{token}"
+
+  user_password_reset_mailer:
+    password_reset_email:
+      asked_for_password_change: Du begärde lösenordsbyte för %{user} på %{domain}.
+      code_for_password_change: "Ändra lösenord via denna länk: %{change_link}. Alternativt, kopiera koden: %{reset_token}"
+
+  mailers:
+    user_password_reset_mailer:
+      password_reset_email:
+        subject: Lösenordsåterställning
