@@ -42,7 +42,7 @@ fi:
   user_password_reset_mailer:
     password_reset_email:
       asked_for_password_change: Pyysit äskettäin salasanan vaihtoa käyttäjälle %{user} sivustolla %{domain}.
-      code_for_password_change: "Voit vaihtaa salasanan tästä linkistä: %{change_link}. Tai voit kopioida koodin käsin tästä: %{reset_token}"
+      code_for_password_change: "Voit vaihtaa salasanan tästä linkistä: %{change_link}. Tai voit kopioida koodin käsin tästä: %{reset_token}. Linkki on voimassa %{ttl}."
 
   mailers:
     user_password_reset_mailer:

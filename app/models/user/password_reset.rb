@@ -42,8 +42,9 @@ class User::PasswordReset < ApplicationRecord
   end
 
   def self.token_allowed(**options)
-    record = where(user_id: options[:user_id]).last
+    record = where(user_id: options[:user_id]).order(id: :desc).first
     return false if record.nil? || record.reset_digest.nil?
+    return false if record.reset_valid_until.nil? || record.reset_valid_until < Time.current
 
     BCrypt::Password.new(record.reset_digest) == options[:token]
   end
@@ -133,6 +134,7 @@ class User::PasswordReset < ApplicationRecord
     password_reset = new
     password_reset.user = user
     password_reset.reset_digest = token_digest
+    password_reset.reset_valid_until = RESET_TOKEN_TTL.from_now
     password_reset.save
 
     domain = Rails.application.config.action_controller.default_url_options[:host]
@@ -152,6 +154,7 @@ class User::PasswordReset < ApplicationRecord
     password_reset = new
     password_reset.user = user
     password_reset.reset_digest = token_digest
+    password_reset.reset_valid_until = RESET_TOKEN_TTL.from_now
     password_reset.save
 
     domain = Rails.application.config.action_controller.default_url_options[:host]
@@ -167,6 +170,7 @@ class User::PasswordReset < ApplicationRecord
   end
   private_class_method :create_token_and_send_email!, :create_token_and_deliver_sms!
 
+  RESET_TOKEN_TTL = 1.hour
   SUBMIT_TOKEN_TTL = 15.minutes
 
   # Mint a short-lived one-time token that the password-reset form submits as a hidden field,

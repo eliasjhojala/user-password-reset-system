@@ -42,7 +42,7 @@ ru:
   user_password_reset_mailer:
     password_reset_email:
       asked_for_password_change: Вы запросили смену пароля для %{user} на %{domain}.
-      code_for_password_change: "Измените пароль по этой ссылке: %{change_link}. Или скопируйте код: %{reset_token}"
+      code_for_password_change: "Измените пароль по этой ссылке: %{change_link}. Или скопируйте код: %{reset_token}. Ссылка действительна в течение %{ttl}."
 
   mailers:
     user_password_reset_mailer:

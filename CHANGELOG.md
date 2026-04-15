@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.1.17 (2026-04-15)
+
+### Breaking changes
+
+#### Migration required — new `reset_valid_until` column
+
+Run the bundled migration to add the expiry column to `user_password_resets`:
+
+```
+rails db:migrate
+```
+
+Migration: `db/migrate/20260415140000_add_reset_valid_until_to_user_password_resets.rb`
+
+The column is required. Without it, `token_allowed` rejects every token (`reset_valid_until` reads as `nil`, which is treated as expired). Existing rows with a non-nil `reset_digest` will be invalidated — users who requested a reset before the migration must request a new one.
+
+---
+
+### Changes
+
+- **Reset token now expires after 1 hour.** `token_allowed` rejects tokens whose `reset_valid_until` has passed or is `nil`. The TTL is set when the token is created (`RESET_TOKEN_TTL = 1.hour`). The reset email now states the validity period, computed from the constant.
+
+---
+
 ## v0.1.16 (2026-04-15)
 
 ### Changes

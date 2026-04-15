@@ -42,7 +42,7 @@ sv:
   user_password_reset_mailer:
     password_reset_email:
       asked_for_password_change: Du begärde lösenordsbyte för %{user} på %{domain}.
-      code_for_password_change: "Ändra lösenord via denna länk: %{change_link}. Alternativt, kopiera koden: %{reset_token}"
+      code_for_password_change: "Ändra lösenord via denna länk: %{change_link}. Alternativt, kopiera koden: %{reset_token}. Länken är giltig i %{ttl}."
 
   mailers:
     user_password_reset_mailer:
