@@ -110,7 +110,8 @@ class User::PasswordReset < ApplicationRecord
     merger.call(relation)
   end
 
-  private_class_method :user_may_request_password_reset?, :find_unique_user_for_password_reset,
+  private_class_method :user_may_request_password_reset?, :user_may_receive_sms_credentials?,
+                       :find_unique_user_for_password_reset,
                        :user_ids_matching_reset_contact, :apply_password_reset_user_scope
 
   def self.user_has_email?(user)
@@ -119,12 +120,24 @@ class User::PasswordReset < ApplicationRecord
 
   def self.new_for_sms(user)
     return false unless user.phone.present?
+    return false unless user_may_receive_sms_credentials?(user)
 
     send_sms = UserPasswordResetSystem.settings[:send_sms]
     return false unless send_sms
 
     create_token_and_deliver_sms!(user, send_sms)
     true
+  end
+
+  # Optional host hook: UserPasswordResetSystem.settings[:user_may_receive_sms_credentials?] = ->(user) { ... }
+  # Return false to refuse sending password-reset instructions via SMS (e.g. users whose wide access
+  # makes SMS delivery insecure). When unset, all found users are allowed. Only called when the user
+  # has no email and would otherwise receive an SMS.
+  def self.user_may_receive_sms_credentials?(user)
+    checker = UserPasswordResetSystem.settings[:user_may_receive_sms_credentials?]
+    return true if checker.blank?
+
+    !!checker.call(user)
   end
 
   def self.create_token_and_send_email!(user, to_email)

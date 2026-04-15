@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.18 (2026-04-15)
+
+### Changes
+
+- Add optional `user_may_receive_sms_credentials?` setting. Called from `new_for_sms` before sending SMS when the user has no email, so hosts can block SMS password-reset delivery for high-access accounts.
+
+---
+
 ## v0.1.17 (2026-04-15)
 
 ### Breaking changes
