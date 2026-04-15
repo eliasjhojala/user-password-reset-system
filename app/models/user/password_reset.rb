@@ -8,24 +8,15 @@ class User::PasswordReset < ApplicationRecord
   end
 
   # contact: one string matched against username, email, and phone; reset proceeds only if exactly one User matches.
-  # email / phone: explicit channels for programmatic use (e.g. admin-triggered reset from known user attributes).
+  # user: a pre-loaded User for programmatic use (e.g. admin-triggered reset); skips the lookup.
   # Returns the User when instructions were sent, false otherwise (truthy/falsy compatible with prior true/false callers).
-  def self.request_reset(email: nil, phone: nil, contact: nil)
-    user =
-      if contact.present?
-        find_unique_user_for_password_reset(contact)
-      else
-        email = email.to_s.strip.presence
-        phone = phone.to_s.strip.presence
-        return false if email.blank? && phone.blank?
-
-        find_user_for_reset_request(email: email, phone: phone)
-      end
+  def self.request_reset(contact: nil, user: nil)
+    user ||= find_unique_user_for_password_reset(contact)
     return false unless user
     return false unless user_may_request_password_reset?(user)
 
     if user_has_email?(user)
-      return false unless new_for_email(user.email.to_s.strip)
+      create_token_and_send_email!(user, user.email.to_s.strip)
     else
       return false unless new_for_sms(user)
     end
@@ -39,20 +30,6 @@ class User::PasswordReset < ApplicationRecord
     return nil if id.blank?
 
     apply_password_reset_user_scope(User).find_by(id: id)
-  end
-
-  def self.new_for_email(email)
-    return false unless email.present?
-
-    users = User.respond_to?(:custom_where_by) ? User.custom_where_by(email: email) : User.where(email: email)
-    users = apply_password_reset_user_scope(users)
-    if users.exists?
-      user = users.order(id: :asc).first
-      create_token_and_send_email!(user, email)
-      true
-    else
-      false
-    end
   end
 
   def self.digest(string)
@@ -77,12 +54,6 @@ class User::PasswordReset < ApplicationRecord
 
   def self.delete_token_for_user(user_id)
     self.where(user_id: user_id).delete_all if self.where(user_id: user_id).exists?
-  end
-
-  def self.find_user_for_reset_request(email:, phone:)
-    u = find_by_email(email) if email.present?
-    u ||= find_by_phone(phone) if phone.present?
-    u
   end
 
   def self.find_unique_user_for_password_reset(contact)
@@ -143,28 +114,6 @@ class User::PasswordReset < ApplicationRecord
 
   def self.user_has_email?(user)
     user.email.present?
-  end
-
-  def self.find_by_email(email)
-    return nil if email.blank?
-
-    users = User.respond_to?(:custom_where_by) ? User.custom_where_by(email: email) : User.where(email: email)
-    users = apply_password_reset_user_scope(users)
-    users.order(id: :asc).first
-  end
-
-  def self.find_by_phone(raw)
-    return nil if raw.blank?
-
-    normalizer = UserPasswordResetSystem.settings[:normalize_phone]
-    normalized = normalizer ? normalizer.call(raw) : raw.strip
-    return nil if normalized.blank?
-
-    base = apply_password_reset_user_scope(User)
-    base.find_by(login_method: :phone, phone: normalized) ||
-      base.find_by(login_method: :phone, phone: raw.strip) ||
-      base.find_by(phone: normalized) ||
-      base.find_by(phone: raw.strip)
   end
 
   def self.new_for_sms(user)
