@@ -23,6 +23,10 @@ fi:
 
       generate_token:
         notice: Jos syöttämälläsi tiedolla löytyi tili, salasananvaihtoohjeet on lähetetty.
+      token_landing:
+        title: Salasanan nollaus
+        message: Pyysit salasanan nollausta. Jatka painamalla alla olevaa painiketta.
+        continue: Jatka
       typed_token:
         success: Koodi oikein. Voit nyt vaihtaa salasanasi.
         error: Koodi väärin

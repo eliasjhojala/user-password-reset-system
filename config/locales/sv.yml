@@ -23,6 +23,10 @@ sv:
 
       generate_token:
         notice: Om ett konto matchade det du angav har instruktioner skickats.
+      token_landing:
+        title: Lösenordsåterställning
+        message: Du begärde en lösenordsåterställning. Tryck på fortsätt för att gå vidare.
+        continue: Fortsätt
       typed_token:
         success: Du kan nu ändra ditt lösenord
         error: Felaktig kod

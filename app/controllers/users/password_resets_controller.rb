@@ -21,19 +21,28 @@ class Users::PasswordResetsController < ApplicationController
 
   def typed_token
     skip_authorization
-    user = User::PasswordReset.user_for_identifier(id: params[:id].presence)
-    if user.present?
-      user_id = user.id
-      if User::PasswordReset.token_allowed(token: params[:token], user_id: user_id)
-        flash_success
-        @user = user
-        @submit_token = User::PasswordReset.generate_submit_token!(user_id: user_id)
-        render :new_password
-        return
+    if request.get?
+      # GET from email/SMS link: render a safe landing page (no token validation).
+      # Link-preview bots only issue GETs, so the token is never consumed here.
+      @token = params[:token]
+      @id = params[:id]
+      render :token_landing
+    else
+      user = User::PasswordReset.user_for_identifier(id: params[:id].presence)
+      if user.present?
+        user_id = user.id
+        if User::PasswordReset.token_allowed(token: params[:token], user_id: user_id)
+          User::PasswordReset.consume_reset_token!(user_id: user_id)
+          flash_success
+          @user = user
+          @submit_token = User::PasswordReset.generate_submit_token!(user_id: user_id)
+          render :new_password
+          return
+        end
       end
+      flash_error
+      render :type_token
     end
-    flash_error
-    render :type_token
   end
 
   def typed_new_password_for_password_reset

@@ -23,6 +23,10 @@ en:
 
       generate_token:
         notice: If an account matched what you entered, reset instructions have been sent.
+      token_landing:
+        title: Password reset
+        message: You requested a password reset. Press continue to proceed.
+        continue: Continue
       typed_token:
         success: You may now change your password
         error: Incorrect token

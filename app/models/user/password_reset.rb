@@ -65,12 +65,14 @@ class User::PasswordReset < ApplicationRecord
   end
 
   def self.token_allowed(**options)
-    if self.where(user_id: options[:user_id]).exists?
-      correct_digest = self.where(user_id: options[:user_id]).last.reset_digest
-      return BCrypt::Password.new(correct_digest) == options[:token]
-    else
-      return false
-    end
+    record = where(user_id: options[:user_id]).last
+    return false if record.nil? || record.reset_digest.nil?
+
+    BCrypt::Password.new(record.reset_digest) == options[:token]
+  end
+
+  def self.consume_reset_token!(user_id:)
+    where(user_id: user_id).update_all(reset_digest: nil)
   end
 
   def self.delete_token_for_user(user_id)

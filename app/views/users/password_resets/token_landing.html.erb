@@ -1,0 +1,16 @@
+<header>
+  <h1><%= t('.title') %></h1>
+</header>
+
+<section>
+  <div>
+    <p><%= t('.message') %></p>
+  </div>
+  <div class="buttons">
+    <%= form_tag typed_token_for_password_reset_path, method: :post do %>
+      <%= hidden_field_tag :token, @token %>
+      <%= hidden_field_tag :id, @id %>
+      <%= submit_tag t('.continue'), class: 'general_button ok' %>
+    <% end %>
+  </div>
+</section>
