@@ -1,0 +1,13 @@
+---
+description: Bump gemspec version and date on every commit
+alwaysApply: true
+---
+
+# Gemspec version
+
+Before every commit that changes gem code, views, locales, or migrations, bump `s.version` and update `s.date` in `user-password-reset-system.gemspec`. Commits that only touch documentation, CHANGELOG, or dev tooling (e.g. Cursor rules) do not need a version bump.
+
+- Version follows `0.1.X` — increment the patch number.
+- Date must be today's date in `YYYY-MM-DD` format.
+- Stage the gemspec together with the other changed files.
+- Add a matching `## vX.Y.Z (YYYY-MM-DD)` entry to `CHANGELOG.md` if one does not exist yet.
