@@ -1,0 +1,29 @@
+---
+description: Git commit subject/body style and agent-assisted trailer (Made-with line per agent)
+alwaysApply: true
+---
+
+# Commit messages
+
+## Subject
+
+- Concise imperative subject lines matching recent repository history (`git log --oneline -20`).
+- Examples from this repo: `Add user_may_receive_sms_credentials? hook for SMS password reset`, `Expire reset token after 1 hour`, `Add link-preview-safe landing page and single-use reset tokens`.
+
+## Body
+
+- Omit the body for small/simple changes.
+- Add a body when it adds clear value — for this gem especially the **security rationale** of the change.
+
+## Agent-assisted trailer
+
+End the message with a single trailing line identifying the agent that wrote it:
+
+- Cursor commits: `Made-with: Cursor`
+- Claude Code commits: `Made-with: Claude`
+
+Do **not** add a `Co-authored-by:` trailer.
+
+## Version bump
+
+Code commits also bump the gemspec version + date and add a CHANGELOG entry — see `gemspec-version.mdc`.

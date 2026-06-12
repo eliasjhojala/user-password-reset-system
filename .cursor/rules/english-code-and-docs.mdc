@@ -1,0 +1,11 @@
+---
+description: Write source code, comments, and repo documentation in English; locales stay multi-language
+alwaysApply: true
+---
+
+## Language for code, comments, and documentation
+
+- Write **source code, comments, and documentation** (incl. `CHANGELOG.md`) in **English**, unless the user explicitly asks otherwise for a specific artifact.
+- The **user's chat language** (often Finnish) is **not** a signal to write code or docs in that language — answer the user in their language; keep the codebase in English.
+- User-facing strings go through `config/locales` — keep all provided languages in sync; no hardcoded copy in views or mailers.
+- Commit messages and identifiers are English.

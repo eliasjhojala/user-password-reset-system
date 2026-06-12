@@ -1,0 +1,13 @@
+---
+description: Always-apply baseline — reset-flow engine with host hooks, study before editing, persist conventions
+alwaysApply: true
+---
+
+- user-password-reset-system is a small **Rails engine** providing the password-reset flow (request → token → reset) with email and SMS delivery. Host apps integrate via the model/controller concerns under `app/` and configurable hook points (e.g. `user_may_receive_sms_credentials?`) — treat hook names, routes, and view/partial names as **public API**; search host apps before renaming.
+- Security-sensitive by nature: tokens are **single-use** and **expire after 1 hour**, and the landing page is link-preview-safe. Preserve these properties in any change; call out security implications explicitly in the commit body.
+- `CHANGELOG.md` documents every released version — update it together with the gemspec version bump (see `gemspec-version.mdc`).
+- Locales live under `config/locales` — keep all provided languages in sync when adding keys.
+- There is **no automated test suite** — verify changes inside a host app and state how the change was verified.
+- Persist project conventions proactively to `.cursor/rules/` (extend an existing rule or add a focused `.mdc`) instead of relying on chat memory.
+
+Commit message conventions live in `commit-messages.mdc`.
