@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.19 (2026-06-18)
+
+### Fixes
+
+- Fix `NameError` at class load: `private_class_method` listed `user_may_receive_sms_credentials?` before the method was defined, so the model failed to load (crashing boot under Rails eager-loading / `eager_load = true`, and on Ruby 3.3). Move the `private_class_method` call to right after the method definition.
+
+---
+
 ## v0.1.18 (2026-04-15)
 
 ### Changes

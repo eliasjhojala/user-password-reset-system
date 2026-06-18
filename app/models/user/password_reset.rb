@@ -110,7 +110,7 @@ class User::PasswordReset < ApplicationRecord
     merger.call(relation)
   end
 
-  private_class_method :user_may_request_password_reset?, :user_may_receive_sms_credentials?,
+  private_class_method :user_may_request_password_reset?,
                        :find_unique_user_for_password_reset,
                        :user_ids_matching_reset_contact, :apply_password_reset_user_scope
 
@@ -139,6 +139,7 @@ class User::PasswordReset < ApplicationRecord
 
     !!checker.call(user)
   end
+  private_class_method :user_may_receive_sms_credentials?
 
   def self.create_token_and_send_email!(user, to_email)
     self.where(user_id: user.id).delete_all if self.where(user_id: user.id).exists?
