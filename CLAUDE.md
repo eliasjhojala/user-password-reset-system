@@ -7,9 +7,20 @@ conventions is `.cursor/rules/`**. This file mirrors them for Claude; the linked
 ## Project at a glance
 
 - Small Rails engine: password-reset flow (request → single-use token, 1 h expiry → reset) with email + SMS delivery and host hook points (`user_may_receive_sms_credentials?`, …)
-- `app/` (mailers, models, controllers, views) + `config/locales` + `CHANGELOG.md`
+- `app/` (mailers, models, controllers, views) + `config/locales` + `db/migrate` + `CHANGELOG.md`
+- Consumed by **gvodata**, **menddie**, **mupe** via GitHub `master` pins in their Gemfiles — the host apps to search before renaming public API and to verify changes in
 - **No test suite** — verify in a host app; security properties (single-use, expiry, preview-safe landing) must be preserved
 - Branch: `master` (`dev`, `phone-numbers` are feature branches)
+
+## Tools (use these — don't hand-roll)
+
+- **`gem-merge-deploy gems/user-password-reset-system <feature> master …`**
+  (VM, `~/.local/bin`) — ship a finished feature branch: merges into `master`
+  (no-ff/squash), publishes to GitHub via `ask-host`, optionally bumps one
+  consumer (`--consumer <rel>:<branch>:user-password-reset-system`). Run with
+  `--dry-run` first; don't hand-roll the cross-machine push.
+- **`git-layout gems/user-password-reset-system`** (VM/host) — confirm the live
+  path/remotes/worktrees instead of guessing.
 
 ## Always-applied rules (summary + link)
 
